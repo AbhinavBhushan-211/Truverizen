@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="md:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-6 md:mb-8 group w-fit">
-              <img src="/logo.png" alt="Truverizen" className="w-8 h-8" />
+              <div className="w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-lg text-white font-bold shadow-lg shadow-indigo-900/30">T</div>
               <span className="font-display font-bold text-2xl text-white tracking-tight">Truverizen</span>
             </Link>
             <p className="text-slate-400 mb-8 max-w-sm leading-relaxed text-sm">
@@ -71,7 +71,10 @@ const Footer: React.FC = () => {
                <a href="mailto:sales@truverizen.ai" className="flex items-center gap-2 hover:text-white transition-colors group">
                   <Mail size={14} className="text-indigo-500 group-hover:text-indigo-400"/> sales@truverizen.ai
                </a>
-               <div className="flex items-center gap-2"><MapPin size={14} className="text-indigo-500"/> Noida, India</div>
+               <div className="flex items-start gap-2">
+                  <MapPin size={14} className="text-indigo-500 mt-1 shrink-0"/> 
+                  <span>WeWork, 1st floor, Galaxy Business Park, Noida, UP 201309</span>
+               </div>
             </div>
           </div>
         </div>
@@ -81,7 +84,7 @@ const Footer: React.FC = () => {
           <div className="text-center md:text-left">© {new Date().getFullYear()} Truverizen Technologies Pvt Ltd. All rights reserved.</div>
           <div className="flex gap-6">
              <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-             <Link to="/privacy" className="hover:text-white transition-colors">Terms of Service</Link>
+             <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

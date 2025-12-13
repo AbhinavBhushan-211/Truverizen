@@ -13,6 +13,7 @@ import About from './pages/About';
 import Careers from './pages/Careers';
 import Blog from './pages/Blog';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 import NotFound from './pages/NotFound';
 import CloudManager from './pages/CloudManager';
 import CloudManagerProduct from './pages/CloudManagerProduct';
@@ -49,6 +50,7 @@ const App: React.FC = () => {
           <Route path="/careers" element={<MainLayout><Careers /></MainLayout>} />
           <Route path="/blog" element={<MainLayout><Blog /></MainLayout>} />
           <Route path="/privacy" element={<MainLayout><PrivacyPolicy /></MainLayout>} />
+          <Route path="/terms" element={<MainLayout><TermsOfService /></MainLayout>} />
           <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
 
           {/* Platform/Dashboard Routes (No MainLayout/Navbar) */}

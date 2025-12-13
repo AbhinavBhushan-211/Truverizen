@@ -9,6 +9,7 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+  const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,7 +41,7 @@ const Navbar: React.FC = () => {
       items: [
         { label: 'TARA AI', href: '/products/tara', desc: 'Knowledge Base Assistant' },
         { label: 'Cloud Manager', href: '/products/cloud-manager', desc: 'Unified Observability' },
-        { label: 'Factory Safety', href: '/#products', desc: 'Vision AI & Compliance' }
+        { label: 'Factory Safety', href: '/products/dot-anomaly', desc: 'Vision AI & Compliance' }
       ]
     },
     { 
@@ -58,6 +59,7 @@ const Navbar: React.FC = () => {
 
   const handleNavigation = (href: string) => {
     setMobileMenuOpen(false);
+    setExpandedMobileSection(null); // Reset mobile menu state
     if (href.startsWith('/#')) {
       const elementId = href.split('#')[1];
       if (location.pathname !== '/') {
@@ -75,11 +77,15 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const toggleMobileSection = (label: string) => {
+    setExpandedMobileSection(expandedMobileSection === label ? null : label);
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        isScrolled || location.pathname !== '/' 
-          ? 'bg-slate-950/80 backdrop-blur-xl border-b border-slate-800 py-3 shadow-lg' 
+        isScrolled || location.pathname !== '/' || mobileMenuOpen
+          ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 py-3 shadow-lg' 
           : 'bg-transparent py-5'
       }`}
       onMouseLeave={() => setHoveredNav(null)}
@@ -87,7 +93,9 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <button onClick={() => navigate('/')} className="flex items-center gap-3 group z-50 relative">
-          <img src="/logo.png" alt="Truverizen" className="w-8 h-8" />
+          <div className="relative w-9 h-9 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg text-white font-bold text-lg shadow-lg shadow-indigo-500/20">
+            T
+          </div>
           
           <div className="flex flex-col items-start">
             <span className="font-display font-bold text-lg tracking-tight leading-none text-white group-hover:text-indigo-400 transition-colors">Truverizen</span>
@@ -160,7 +168,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2 text-white"
+          className="md:hidden p-2 text-white hover:bg-slate-800 rounded-lg transition-colors"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -174,47 +182,74 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-slate-950/95 backdrop-blur-xl border-t border-slate-800 shadow-xl overflow-hidden fixed w-full z-40 top-[70px]"
+            className="md:hidden bg-slate-950 border-b border-slate-800 shadow-2xl overflow-hidden absolute top-full left-0 w-full"
+            style={{ maxHeight: 'calc(100vh - 70px)', overflowY: 'auto' }}
           >
-            <div className="flex flex-col p-6 space-y-6 max-h-[85vh] overflow-y-auto">
+            <div className="flex flex-col px-6 py-4">
               {navStructure.map((item) => (
-                <div key={item.label} className="space-y-3">
+                <div key={item.label} className="border-b border-slate-800/50 last:border-0">
                   {item.type === 'link' ? (
                      <button
                         onClick={() => item.href && handleNavigation(item.href)}
-                        className="text-left text-lg font-bold text-white hover:text-indigo-400 block"
+                        className="w-full text-left py-4 text-lg font-bold text-white hover:text-indigo-400 transition-colors"
                       >
                         {item.label}
                       </button>
                   ) : (
-                    <>
-                      <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">{item.label}</div>
-                      <div className="pl-0 grid gap-3">
-                        {item.items?.map((subItem, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => handleNavigation(subItem.href)}
-                            className="block text-left text-base font-medium text-slate-400 hover:text-white"
-                          >
-                            {subItem.label}
-                          </button>
-                        ))}
-                      </div>
-                    </>
+                    <div>
+                      <button 
+                        onClick={() => toggleMobileSection(item.label)}
+                        className="w-full flex items-center justify-between py-4 text-lg font-bold text-white hover:text-indigo-400 transition-colors"
+                      >
+                        {item.label}
+                        <ChevronDown 
+                            size={20} 
+                            className={`transition-transform duration-300 text-slate-500 ${expandedMobileSection === item.label ? 'rotate-180 text-indigo-400' : ''}`} 
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {expandedMobileSection === item.label && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="overflow-hidden"
+                            >
+                                <div className="pl-4 pb-6 space-y-4">
+                                    {item.items?.map((subItem, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => handleNavigation(subItem.href)}
+                                            className="block w-full text-left group"
+                                        >
+                                            <div className="text-base font-medium text-slate-300 group-hover:text-white transition-colors flex items-center">
+                                                {subItem.label}
+                                                <ChevronRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-indigo-400 ml-2" />
+                                            </div>
+                                            {subItem.desc && <div className="text-xs text-slate-500 mt-1 pr-4">{subItem.desc}</div>}
+                                        </button>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   )}
                 </div>
               ))}
               
-              <hr className="border-slate-800" />
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  openContact();
-                }}
-                className="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-900/30"
-              >
-                Contact Us
-              </button>
+              <div className="pt-8 pb-8">
+                <button
+                    onClick={() => {
+                        setMobileMenuOpen(false);
+                        openContact();
+                    }}
+                    className="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-900/30 hover:bg-indigo-500 transition-colors"
+                >
+                    Contact Us
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
