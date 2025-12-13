@@ -93,9 +93,7 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <button onClick={() => navigate('/')} className="flex items-center gap-3 group z-50 relative">
-          <div className="relative w-9 h-9 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg text-white font-bold text-lg shadow-lg shadow-indigo-500/20">
-            T
-          </div>
+         <img src="/logo.png" alt="Truverizen" className="w-8 h-8" />
           
           <div className="flex flex-col items-start">
             <span className="font-display font-bold text-lg tracking-tight leading-none text-white group-hover:text-indigo-400 transition-colors">Truverizen</span>

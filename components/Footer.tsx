@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="md:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-6 md:mb-8 group w-fit">
-              <div className="w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-lg text-white font-bold shadow-lg shadow-indigo-900/30">T</div>
+              <img src="/logo.png" alt="Truverizen" className="w-8 h-8" />
               <span className="font-display font-bold text-2xl text-white tracking-tight">Truverizen</span>
             </Link>
             <p className="text-slate-400 mb-8 max-w-sm leading-relaxed text-sm">
