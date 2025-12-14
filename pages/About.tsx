@@ -154,7 +154,7 @@ const About: React.FC = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full"></div>
               <div className="relative bg-slate-950 border border-slate-800 p-8 rounded-3xl shadow-2xl">
-                <h3 className="text-xl font-bold text-white mb-6">Industries We Support</h3>
+                <h3 className="text-xl font-bold text-white mb-6">Enterprise Workflows We Automate</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {['Finance & Accounting', 'Human Resources', 'Legal & Compliance', 'Sales & Marketing', 'Operations', 'Customer Support'].map((ind, i) => (
                     <div key={i} className="p-3 bg-slate-900 border border-slate-800 rounded-lg text-sm text-slate-300 flex items-center gap-2">
