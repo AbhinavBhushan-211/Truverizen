@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
   const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const { openContact } = useContact();
@@ -25,8 +25,8 @@ const Navbar: React.FC = () => {
 
   const navStructure: NavItem[] = [
     { label: 'About Us', href: '/about', type: 'link' },
-    { 
-      label: 'Services', 
+    {
+      label: 'Services',
       type: 'dropdown',
       items: [
         { label: 'Cloud Services', href: '/services/cloud', desc: 'Migration & Modernization' },
@@ -34,8 +34,8 @@ const Navbar: React.FC = () => {
         { label: 'Cybersecurity', href: '/services/security', desc: 'Zero-Trust & SOC' }
       ]
     },
-    { 
-      label: 'Products', 
+    {
+      label: 'Products',
       type: 'dropdown',
       href: '/#products',
       items: [
@@ -44,8 +44,8 @@ const Navbar: React.FC = () => {
         { label: 'Factory Safety', href: '/products/dot-anomaly', desc: 'Vision AI & Compliance' }
       ]
     },
-    { 
-      label: 'Industries', 
+    {
+      label: 'Industries',
       type: 'dropdown',
       items: [
         { label: 'BFSI', href: '/industries/bfsi' },
@@ -83,39 +83,50 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        isScrolled || location.pathname !== '/' || mobileMenuOpen
-          ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 py-3 shadow-lg' 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled || location.pathname !== '/' || mobileMenuOpen
+          ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 py-3 shadow-lg'
           : 'bg-transparent py-5'
-      }`}
+        }`}
       onMouseLeave={() => setHoveredNav(null)}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <button onClick={() => navigate('/')} className="flex items-center gap-3 group z-50 relative">
-         <img src="/logo.png" alt="Truverizen" className="w-8 h-8" />
-          
+        {/* Logo */}
+        <button onClick={() => navigate('/')} className="flex items-center gap-4 group z-50 relative">
+          {/* 1. Increased image size from w-8 h-8 to w-12 h-12 (and w-14 on desktop) */}
+          <img
+            src="/logo.png"
+            alt="Truverizen"
+            className="w-12 h-12 md:w-14 md:h-14 rounded-xl object-contain"
+          />
+
           <div className="flex flex-col items-start">
-            <span className="font-display font-bold text-lg tracking-tight leading-none text-white group-hover:text-indigo-400 transition-colors">Truverizen</span>
-            <span className="text-[9px] uppercase tracking-[0.2em] text-slate-400 font-semibold">Technologies</span>
+            {/* 2. Increased text size from text-lg to text-xl (and text-2xl on desktop) */}
+            <span className="font-display font-bold text-xl md:text-2xl tracking-tight leading-none text-white group-hover:text-indigo-400 transition-colors">
+              Truverizen
+            </span>
+
+            {/* 3. Slightly increased subtitle size and spacing */}
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold mt-0.5">
+              Technologies
+            </span>
           </div>
         </button>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navStructure.map((item) => (
-            <div 
-              key={item.label} 
+            <div
+              key={item.label}
               className="relative group h-full py-2"
               onMouseEnter={() => setHoveredNav(item.label)}
             >
               <button
                 onClick={() => item.type === 'link' && item.href && handleNavigation(item.href)}
-                className={`text-sm font-semibold transition-colors flex items-center gap-1.5 ${
-                  isScrolled || location.pathname !== '/' 
-                    ? 'text-slate-300 hover:text-white' 
+                className={`text-sm font-semibold transition-colors flex items-center gap-1.5 ${isScrolled || location.pathname !== '/'
+                    ? 'text-slate-300 hover:text-white'
                     : 'text-slate-300 hover:text-white'
-                }`}
+                  }`}
               >
                 {item.label}
                 {item.type === 'dropdown' && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300 opacity-60" />}
@@ -153,10 +164,10 @@ const Navbar: React.FC = () => {
               </AnimatePresence>
             </div>
           ))}
-          
+
           <div className="h-5 w-px bg-slate-800"></div>
 
-          <button 
+          <button
             onClick={openContact}
             className="px-5 py-2.5 text-sm font-bold rounded-full transition-all hover:-translate-y-0.5 shadow-lg bg-white text-slate-950 hover:bg-indigo-50 hover:shadow-indigo-500/20"
           >
@@ -187,65 +198,65 @@ const Navbar: React.FC = () => {
               {navStructure.map((item) => (
                 <div key={item.label} className="border-b border-slate-800/50 last:border-0">
                   {item.type === 'link' ? (
-                     <button
-                        onClick={() => item.href && handleNavigation(item.href)}
-                        className="w-full text-left py-4 text-lg font-bold text-white hover:text-indigo-400 transition-colors"
-                      >
-                        {item.label}
-                      </button>
+                    <button
+                      onClick={() => item.href && handleNavigation(item.href)}
+                      className="w-full text-left py-4 text-lg font-bold text-white hover:text-indigo-400 transition-colors"
+                    >
+                      {item.label}
+                    </button>
                   ) : (
                     <div>
-                      <button 
+                      <button
                         onClick={() => toggleMobileSection(item.label)}
                         className="w-full flex items-center justify-between py-4 text-lg font-bold text-white hover:text-indigo-400 transition-colors"
                       >
                         {item.label}
-                        <ChevronDown 
-                            size={20} 
-                            className={`transition-transform duration-300 text-slate-500 ${expandedMobileSection === item.label ? 'rotate-180 text-indigo-400' : ''}`} 
+                        <ChevronDown
+                          size={20}
+                          className={`transition-transform duration-300 text-slate-500 ${expandedMobileSection === item.label ? 'rotate-180 text-indigo-400' : ''}`}
                         />
                       </button>
                       <AnimatePresence>
                         {expandedMobileSection === item.label && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="overflow-hidden"
-                            >
-                                <div className="pl-4 pb-6 space-y-4">
-                                    {item.items?.map((subItem, idx) => (
-                                        <button
-                                            key={idx}
-                                            onClick={() => handleNavigation(subItem.href)}
-                                            className="block w-full text-left group"
-                                        >
-                                            <div className="text-base font-medium text-slate-300 group-hover:text-white transition-colors flex items-center">
-                                                {subItem.label}
-                                                <ChevronRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-indigo-400 ml-2" />
-                                            </div>
-                                            {subItem.desc && <div className="text-xs text-slate-500 mt-1 pr-4">{subItem.desc}</div>}
-                                        </button>
-                                    ))}
-                                </div>
-                            </motion.div>
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pl-4 pb-6 space-y-4">
+                              {item.items?.map((subItem, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => handleNavigation(subItem.href)}
+                                  className="block w-full text-left group"
+                                >
+                                  <div className="text-base font-medium text-slate-300 group-hover:text-white transition-colors flex items-center">
+                                    {subItem.label}
+                                    <ChevronRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-indigo-400 ml-2" />
+                                  </div>
+                                  {subItem.desc && <div className="text-xs text-slate-500 mt-1 pr-4">{subItem.desc}</div>}
+                                </button>
+                              ))}
+                            </div>
+                          </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
                   )}
                 </div>
               ))}
-              
+
               <div className="pt-8 pb-8">
                 <button
-                    onClick={() => {
-                        setMobileMenuOpen(false);
-                        openContact();
-                    }}
-                    className="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-900/30 hover:bg-indigo-500 transition-colors"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    openContact();
+                  }}
+                  className="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-900/30 hover:bg-indigo-500 transition-colors"
                 >
-                    Contact Us
+                  Contact Us
                 </button>
               </div>
             </div>
