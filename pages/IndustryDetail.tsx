@@ -69,7 +69,7 @@ const IndustryDetail: React.FC = () => {
         </motion.div>
 
         <div className="mb-10">
-            <h2 className="text-3xl font-bold mb-4 text-white">Our Tailored Solutions</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white">Our Capabilities</h2>
             <div className="h-1 w-20 bg-indigo-600 rounded-full"></div>
         </div>
 
