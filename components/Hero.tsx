@@ -239,7 +239,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, type: "spring", bounce: 0.2 }}
-            className="relative w-full max-w-7xl mx-auto h-auto min-h-[500px] md:h-[650px] perspective-[1000px] group"
+            className="hidden relative w-full max-w-7xl mx-auto h-auto min-h-[500px] md:h-[650px] perspective-[1000px] group"
          >
              {/* Orbital Ring Background */}
              <div className="absolute inset-0 border border-indigo-500/10 rounded-full scale-[1.2] rotate-[60deg] animate-spin-slow pointer-events-none hidden md:block"></div>
